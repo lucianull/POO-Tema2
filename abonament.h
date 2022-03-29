@@ -1,11 +1,9 @@
+#ifndef ABONAMENT_H_INCLUDED
+#define ABONAMENT_H_INCLUDED
 
-
-#ifndef POO_TEMA_LABORATOR_2_ABONAMENT_H
-#define POO_TEMA_LABORATOR_2_ABONAMEBT_H
-
-#include <string>
 #include <iostream>
 #include <fstream>
+#include <string>
 
 using namespace std;
 
@@ -16,14 +14,15 @@ class Abonament {
         int perioada;
     public:
         Abonament() : nume_abonament(""), pret(0), perioada(0) {}
-        Abonament(string name, float price, int period) : nume_abonament(name), pret(price), perioada(period) {}
-        Abonament(const Abonament &abonament): nume_abonament(abonament.nume_abonament), pret(abonament.pret), perioada(abonament.perioada) {}
-        void SetNumeAbonament(string nume_abonament) {this->nume_abonament = nume_abonament; }
-        void SetPret(float pret) { this->pret = pret; }
-        void SetPerioada(int perioada) { this->perioada = perioada; }
-        string GetNumeAbonament() { return nume_abonament; }
-        float GetPret() { return pret; }
-        int GetPerioada() { return perioada; }
+        Abonament(string name, float price, int period): nume_abonament(name), pret(price), perioada(period) {}
+        Abonament(const Abonament & abonament)
+        {
+            this->nume_abonament = abonament.nume_abonament;
+            this->pret = abonament.pret;
+            this->perioada = abonament.perioada;
+        }
+        friend istream& operator>> (istream&, Abonament&);
+        friend ostream& operator<< (ostream&, const Abonament&);
         Abonament& operator= (const Abonament& abonament)
         {
             this->nume_abonament = abonament.nume_abonament;
@@ -31,8 +30,14 @@ class Abonament {
             this->perioada = abonament.perioada;
             return *this;
         }
-        friend istream& operator>>(istream& in, Abonament&);
-        friend ostream& operator<<(ostream& out, const Abonament&);
+        void SetNumeAbonament(string name) {nume_abonament = name;}
+        void SetPret(float price) {pret = price;}
+        void SetPerioada(int period) {perioada = period; }
+        string GetNumeAbonament() {return nume_abonament;}
+        float GetPret() {return pret;}
+        int GetPerioada() {return perioada;}
+        virtual void SetReducere(int discount) {}
+        virtual int GetReducere() {}
 };
 
 istream& operator>> (istream& in, Abonament& abonament)
@@ -47,4 +52,4 @@ ostream& operator<< (ostream& out, const Abonament& abonament)
     return out;
 }
 
-#endif
+#endif // ABONAMENT_H_INCLUDED
