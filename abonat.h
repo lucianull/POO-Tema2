@@ -60,30 +60,33 @@ class Abonat : public Persoana {
                 this->x->SetPerioada(abonat.x->GetPerioada());
             }
         }
+        Abonat& operator= (const Abonat& abonat)
+        {
+            this->nr_telefon = abonat.nr_telefon;
+            this->id = abonat.id;
+            this->nume = abonat.nume;
+            this->cnp = abonat.cnp;
+            if(abonat.x->GetReducere())
+                this->x = new Abonament_Premium(abonat.x->GetNumeAbonament(), abonat.x->GetPret(), abonat.x->GetPerioada(), abonat.x->GetReducere());
+            else
+                this->x = new Abonament(abonat.x->GetNumeAbonament(), abonat.x->GetPret(), abonat.x->GetPerioada());
+            return *this;
+        }
+        Abonament* GetX() {return x;}
+        ~Abonat() {delete x;}
         friend istream& operator>> (istream& in, Abonat&);
         friend ostream& operator<< (ostream& out, const Abonat&);
+        string GetNrTelefon() {return nr_telefon;}
 };
 
 istream& operator>> (istream& in, Abonat& abonat)
 {
-    string s;
-    getline(in, s);
-    char *p = strtok(&s[0], " ");
-    vector < string > v;
-    while(p != NULL)
-    {
-        v.push_back(p);
-        p = strtok(NULL, " ");
-    }
-    abonat.id = atoi(v[0].c_str());
-    abonat.nume = v[1];
-    abonat.cnp = v[2];
-    abonat.nr_telefon = v[3];
-    abonat.x->SetNumeAbonament(v[4]);
-    abonat.x->SetPret(strtof(v[5].c_str(), NULL));
-    abonat.x->SetPerioada(atoi(v[6].c_str()));
-    if(v.size() > 7)
-        abonat.x->SetReducere(atoi(v[7].c_str()));
+    char s[10001];
+    in.getline(s, 10000);
+    char *p = strtok(s, " ");
+    abonat.id = atoi(p);
+    p = strtok(NULL, " ");
+    abonat.nume = p;
     return in;
 }
 
