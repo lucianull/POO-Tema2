@@ -16,7 +16,7 @@ class Clienti {
             Abonat* a;
             for(Abonat* it : v.clienti)
             {
-                a = new Abonat(it->GetId(), it->GetNume(), it->GetCnp(), it->GetNrTelefon(), it->GetX()->GetNumeAbonament(), it->GetX()->GetPret(), it->GetX()->GetPerioada(), it->GetX()->GetReducere());
+                a = new Abonat(*it);
                 this->clienti.push_back(a);
             }
         }
@@ -41,7 +41,6 @@ class Clienti {
         {
             Abonat *Client = clienti[indexClient - 1];
             std :: vector < Abonat* > :: iterator it = clienti.begin() + indexClient - 1;
-            if(Client->GetX()->GetReducere())
             clienti.erase(it);
             delete Client;
         }
@@ -52,17 +51,10 @@ class Clienti {
         void ShowClientSubs(int indexClient)
         {
             cout << clienti[indexClient - 1]->GetX()->GetNumeAbonament() << ' ' << clienti[indexClient - 1]->GetX()->GetPret() << ' ' << clienti[indexClient - 1]->GetX()->GetPerioada();
-            if(dynamic_cast<Abonament_Premium*> (clienti[indexClient - 1]->GetX()))
-                cout << ' ' << clienti[indexClient - 1]->GetX()->GetReducere();
+            Abonament_Premium* pointer = dynamic_cast <Abonament_Premium* > (clienti[indexClient - 1]->GetX());
+            if(pointer)
+                cout << ' ' << pointer->GetReducere();
         }
-        // int GetNrAbonatiPremium()
-        // {
-        //     int nrAbonatiPremium = 0;
-        //     for(Abonat* it : clienti)
-        //         if(dynamic_cast<Abonament_Premium*> (it->GetX()))
-        //             nrAbonatiPremium ++;
-        //     return nrAbonatiPremium;
-        // }
         int GetNrAbonatiPremium()
         {
             return Abonament_Premium::GetNrAbonatiPremium();
@@ -79,7 +71,7 @@ class Clienti {
                 
             for(Abonat* it : clienti.clienti)
             {
-                a = new Abonat(it->GetId(), it->GetNume(), it->GetCnp(), it->GetNrTelefon(), it->GetX()->GetNumeAbonament(), it->GetX()->GetPret(), it->GetX()->GetPerioada(), it->GetX()->GetReducere());
+                a = new Abonat(*it);
                 this->clienti.push_back(it);
             }
             return *this;

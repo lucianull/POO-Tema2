@@ -37,8 +37,6 @@ class Abonament {
         string GetNumeAbonament() {return nume_abonament;}
         float GetPret() {return pret;}
         int GetPerioada() {return perioada;}
-        virtual void SetReducere(int discount) {return;}
-        virtual int GetReducere() {return 0;}
         virtual float BaniPlatiti() {return pret * perioada;}
 };
 

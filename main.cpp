@@ -16,7 +16,7 @@ void Print()
     printf("Exit\n");
 }
 
-void Run_Instruction(Clienti &clients_object, char str[])
+void Run_Instruction(Clienti clients_object, char str[])
 {
     const char DELIMITER[]="\n<------------------------------------------>\n";
     char *pointer;
@@ -28,7 +28,7 @@ void Run_Instruction(Clienti &clients_object, char str[])
     else
     {
         if(strcmp(pointer, "Show"))
-
+            return;
     }
 }
 
@@ -36,7 +36,7 @@ void Run()
 {
     char s[1005];
     Print();
-    Clienti clients_object();
+    Clienti clients_object;
     while(true)
     {
         cin.getline(s, 1000);
@@ -46,5 +46,13 @@ void Run()
 
 int main()
 {
+    // Clienti a;
+    // a.addClient(123, "misu", "213", "05552", "troleu", 132.2, 2);
+    // a.addClient(1233, "andrei", "23", "0555204787", "metrou", 12.2, 2, 2);
+    // a.ShowClient(1);
+    // cout << '\n';
+    // a.ShowClient(2);
+    // cout << '\n' << a.GetNrAbonatiPremium() << ' ' << a.Suma() << '\n';
+    // a.ShowClientSubs(1); cout << '\n'; a.ShowClientSubs(2);
     return 0;
 }

@@ -20,20 +20,9 @@ class Abonat : public Persoana {
         {
             this->nr_telefon = nr_telefon;
             if(reducere == 0)
-            {
-                this->x = new Abonament();
-                this->x->SetNumeAbonament(nume_abonament);
-                this->x->SetPerioada(perioada);
-                this->x->SetPret(pret);
-            }
+                this->x = new Abonament(nume_abonament, pret, perioada);
             else
-            {
-                this->x = new Abonament_Premium();
-                this->x->SetNumeAbonament(nume_abonament);
-                this->x->SetPerioada(perioada);
-                this->x->SetPret(pret);
-                this->x->SetReducere(reducere);
-            }
+                this->x = new Abonament_Premium(nume_abonament, pret, perioada, reducere);
         }
         Abonat(const Abonat& abonat)
         {
@@ -41,21 +30,11 @@ class Abonat : public Persoana {
             this->nume = abonat.nume;
             this->cnp = abonat.cnp;
             this->nr_telefon = abonat.nr_telefon;
-            if(dynamic_cast<Abonament_Premium*> (abonat.x))
-            {
-                this->x = new Abonament_Premium;
-                this->x->SetNumeAbonament(abonat.x->GetNumeAbonament());
-                this->x->SetPret(abonat.x->GetPret());
-                this->x->SetPerioada(abonat.x->GetPerioada());
-                this->x->SetReducere(abonat.x->GetReducere());
-            }
+            Abonament_Premium* pointer = dynamic_cast <Abonament_Premium* > (abonat.x);
+            if(pointer)
+                this->x = new Abonament_Premium(*pointer);
             else
-            {
-                this->x = new Abonament;
-                this->x->SetNumeAbonament(abonat.x->GetNumeAbonament());
-                this->x->SetPret(abonat.x->GetPret());
-                this->x->SetPerioada(abonat.x->GetPerioada());
-            }
+                this->x = new Abonament(*pointer);
         }
         Abonat& operator= (const Abonat& abonat)
         {
@@ -68,15 +47,17 @@ class Abonat : public Persoana {
             {
                 Abonament *p;
                 p = abonat.x;
-                if(abonat.x->GetReducere())
-                    this->x = new Abonament_Premium(abonat.x->GetNumeAbonament(), abonat.x->GetPret(), abonat.x->GetPerioada(), abonat.x->GetReducere());
+                Abonament_Premium* pointer = dynamic_cast <Abonament_Premium* > (abonat.x);
+                if(pointer and pointer->GetReducere())
+                    this->x = new Abonament_Premium(abonat.x->GetNumeAbonament(), abonat.x->GetPret(), abonat.x->GetPerioada(), pointer->GetReducere());
                 else
                     this->x = new Abonament(abonat.x->GetNumeAbonament(), abonat.x->GetPret(), abonat.x->GetPerioada());
                 delete p;
                 return *this;
             }
-            if(dynamic_cast<Abonament_Premium*> (abonat.x))
-                this->x = new Abonament_Premium(abonat.x->GetNumeAbonament(), abonat.x->GetPret(), abonat.x->GetPerioada(), abonat.x->GetReducere());
+            Abonament_Premium* pointer = dynamic_cast <Abonament_Premium* > (abonat.x);
+            if(pointer)
+                this->x = new Abonament_Premium(abonat.x->GetNumeAbonament(), abonat.x->GetPret(), abonat.x->GetPerioada(), pointer->GetReducere());
             else
                 this->x = new Abonament(abonat.x->GetNumeAbonament(), abonat.x->GetPret(), abonat.x->GetPerioada());
             return *this;
@@ -90,9 +71,10 @@ class Abonat : public Persoana {
 
 ostream& operator<< (ostream& out, const Abonat& abonat)
 {
+    Abonament_Premium* pointer = dynamic_cast <Abonament_Premium* > (abonat.x);
     out << abonat.id << ' ' << abonat.nume << ' ' << abonat.cnp << ' ' << abonat.nr_telefon << ' ' << abonat.x->GetNumeAbonament() << ' ' << abonat.x->GetPret() << ' ' << abonat.x->GetPerioada();
-    if(abonat.x->GetReducere())
-        out << ' ' << abonat.x->GetReducere();
+    if(pointer and pointer->GetReducere())
+        out << ' ' << pointer->GetReducere();
     return out;
 }
 
