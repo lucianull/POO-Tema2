@@ -41,7 +41,7 @@ class Abonat : public Persoana {
             this->nume = abonat.nume;
             this->cnp = abonat.cnp;
             this->nr_telefon = abonat.nr_telefon;
-            if(abonat.x->GetReducere())
+            if(dynamic_cast<Abonament_Premium*> (abonat.x))
             {
                 this->x = new Abonament_Premium;
                 this->x->SetNumeAbonament(abonat.x->GetNumeAbonament());
@@ -75,7 +75,7 @@ class Abonat : public Persoana {
                 delete p;
                 return *this;
             }
-            if(abonat.x->GetReducere())
+            if(dynamic_cast<Abonament_Premium*> (abonat.x))
                 this->x = new Abonament_Premium(abonat.x->GetNumeAbonament(), abonat.x->GetPret(), abonat.x->GetPerioada(), abonat.x->GetReducere());
             else
                 this->x = new Abonament(abonat.x->GetNumeAbonament(), abonat.x->GetPret(), abonat.x->GetPerioada());
@@ -83,21 +83,10 @@ class Abonat : public Persoana {
         }
         Abonament* GetX() {return x;}
         virtual ~Abonat() {delete x;}
-        friend istream& operator>> (istream& in, Abonat&);
         friend ostream& operator<< (ostream& out, const Abonat&);
         string GetNrTelefon() {return nr_telefon;}
 };
 
-istream& operator>> (istream& in, Abonat& abonat)
-{
-    char s[10001];
-    in.getline(s, 10000);
-    char *p = strtok(s, " ");
-    abonat.id = atoi(p);
-    p = strtok(NULL, " ");
-    abonat.nume = p;
-    return in;
-}
 
 ostream& operator<< (ostream& out, const Abonat& abonat)
 {

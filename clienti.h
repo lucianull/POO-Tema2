@@ -53,15 +53,19 @@ class Clienti {
         {
             cout << clienti[indexClient - 1]->GetX()->GetNumeAbonament() << ' ' << clienti[indexClient - 1]->GetX()->GetPret() << ' ' << clienti[indexClient - 1]->GetX()->GetPerioada();
             if(dynamic_cast<Abonament_Premium*> (clienti[indexClient - 1]->GetX()))
-                cout << clienti[indexClient - 1]->GetX()->GetReducere();
+                cout << ' ' << clienti[indexClient - 1]->GetX()->GetReducere();
         }
+        // int GetNrAbonatiPremium()
+        // {
+        //     int nrAbonatiPremium = 0;
+        //     for(Abonat* it : clienti)
+        //         if(dynamic_cast<Abonament_Premium*> (it->GetX()))
+        //             nrAbonatiPremium ++;
+        //     return nrAbonatiPremium;
+        // }
         int GetNrAbonatiPremium()
         {
-            int nrAbonatiPremium = 0;
-            for(Abonat* it : clienti)
-                if(dynamic_cast<Abonament_Premium*> (it->GetX()))
-                    nrAbonatiPremium ++;
-            return nrAbonatiPremium;
+            return Abonament_Premium::GetNrAbonatiPremium();
         }
         Clienti& operator= (const Clienti& clienti)
         {
