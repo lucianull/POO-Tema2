@@ -16,11 +16,8 @@ class Abonat : public Persoana {
         Abonament* x;
     public:
         Abonat(): Persoana(), nr_telefon(""), x(NULL) {}
-        Abonat(int id, string nume, string cnp, string nr_telefon, string nume_abonament, float pret, int perioada, int reducere=0)
+        Abonat(int ID, string name, string CNP, string nr_telefon, string nume_abonament, float pret, int perioada, int reducere=0) : Persoana(ID, name, CNP)
         {
-            this->id = id;
-            this->nume = nume;
-            this->cnp = cnp;
             this->nr_telefon = nr_telefon;
             if(reducere == 0)
             {
@@ -66,6 +63,18 @@ class Abonat : public Persoana {
             this->id = abonat.id;
             this->nume = abonat.nume;
             this->cnp = abonat.cnp;
+
+            if(abonat.x != NULL)
+            {
+                Abonament *p;
+                p = abonat.x;
+                if(abonat.x->GetReducere())
+                    this->x = new Abonament_Premium(abonat.x->GetNumeAbonament(), abonat.x->GetPret(), abonat.x->GetPerioada(), abonat.x->GetReducere());
+                else
+                    this->x = new Abonament(abonat.x->GetNumeAbonament(), abonat.x->GetPret(), abonat.x->GetPerioada());
+                delete p;
+                return *this;
+            }
             if(abonat.x->GetReducere())
                 this->x = new Abonament_Premium(abonat.x->GetNumeAbonament(), abonat.x->GetPret(), abonat.x->GetPerioada(), abonat.x->GetReducere());
             else
@@ -73,7 +82,7 @@ class Abonat : public Persoana {
             return *this;
         }
         Abonament* GetX() {return x;}
-        ~Abonat() {delete x;}
+        virtual ~Abonat() {delete x;}
         friend istream& operator>> (istream& in, Abonat&);
         friend ostream& operator<< (ostream& out, const Abonat&);
         string GetNrTelefon() {return nr_telefon;}

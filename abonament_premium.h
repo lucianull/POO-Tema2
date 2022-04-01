@@ -18,6 +18,7 @@ class Abonament_Premium : public Abonament {
             this->perioada = abonament.perioada;
             this->reducere = abonament.reducere;
         }
+        ~Abonament_Premium() {}
         friend istream& operator>> (istream&, Abonament_Premium&);
         friend ostream& operator<< (ostream&, const Abonament_Premium&);
         Abonament_Premium& operator= (const Abonament_Premium& abonament)
@@ -30,6 +31,7 @@ class Abonament_Premium : public Abonament {
         }
         void SetReducere(int discount) {reducere = discount;}
         int GetReducere() {return reducere;}
+        float BaniPlatiti() {return (pret - reducere) * perioada;}
 };
 
 istream& operator>> (istream& in, Abonament_Premium& abonament)

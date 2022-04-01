@@ -30,14 +30,16 @@ class Abonament {
             this->perioada = abonament.perioada;
             return *this;
         }
+        virtual ~Abonament() {}
         void SetNumeAbonament(string name) {nume_abonament = name;}
         void SetPret(float price) {pret = price;}
         void SetPerioada(int period) {perioada = period; }
         string GetNumeAbonament() {return nume_abonament;}
         float GetPret() {return pret;}
         int GetPerioada() {return perioada;}
-        virtual void SetReducere(int discount) {}
-        virtual int GetReducere() {}
+        virtual void SetReducere(int discount) {return;}
+        virtual int GetReducere() {return 0;}
+        virtual float BaniPlatiti() {return pret * perioada;}
 };
 
 istream& operator>> (istream& in, Abonament& abonament)

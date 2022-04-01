@@ -20,6 +20,7 @@ class Persoana {
             this->nume = person.nume;
             this->cnp = person.cnp;
         }
+        virtual ~Persoana() {}
         friend istream& operator>> (istream&, Persoana&);
         friend ostream& operator<< (ostream&, const Persoana&);
         Persoana& operator= (const Persoana& person)
