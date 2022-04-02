@@ -8,7 +8,7 @@ using namespace std;
 class Abonament_Premium : public Abonament {
     protected:
         static int NrAbonatiPremium;
-        int reducere;
+        float reducere;
     public:
         Abonament_Premium(): Abonament(), reducere(0) {NrAbonatiPremium ++;}
         Abonament_Premium(string name, float price, int period, int discount): Abonament(name, price, period), reducere(discount) {NrAbonatiPremium ++;}

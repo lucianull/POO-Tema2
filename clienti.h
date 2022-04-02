@@ -32,7 +32,7 @@ class Clienti {
                 delete pointer;
             }
         }
-        void addClient(int id, string nume, string cnp, string nr_telefon, string nume_abonament, float pret, int perioada, int reducere=0)
+        void addClient(int id, string nume, string cnp, string nr_telefon, string nume_abonament, float pret, int perioada, float reducere=0)
         {
             Abonat *ClientNou = new Abonat(id, nume, cnp, nr_telefon, nume_abonament, pret, perioada, reducere);
             clienti.push_back(ClientNou);
@@ -83,7 +83,6 @@ class Clienti {
                 suma += it->GetX()->BaniPlatiti();
             return suma;
         }
+        int size() {return clienti.size();}
 };
-
-
 #endif // CLIENT_H_INCLUDED
