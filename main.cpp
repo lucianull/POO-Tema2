@@ -79,6 +79,10 @@ void DeleteClient(Clienti &clients_object, int clientIndex)
 
 void ShowAllClients(Clienti &clients_object)
 {
+    if(size == 0)
+    {
+        cout << "Nu exista nici un client in lista\n";
+    }
     int size = clients_object.size();
     for(int i = 1; i <= size; i++)
         ShowClient(clients_object, i);
